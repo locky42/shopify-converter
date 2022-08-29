@@ -2,52 +2,52 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+$this->title = 'Shopify CSV converter';
 ?>
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <h1 class="display-4">Convert Ecolight to Shopify</h1>
     </div>
 
-    <div class="body-content">
+    <div class="body-content container">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Upload File</label>
+                            <div class="preview-zone hidden">
+                                <div class="box box-solid">
+                                    <div class="box-header with-border">
+                                        <div><b>Preview</b></div>
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-danger btn-xs remove-preview">
+                                                <i class="fa fa-times"></i> Reset The Field
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body"></div>
+                                </div>
+                            </div>
+                            <div class="dropzone-wrapper">
+                                <div class="dropzone-desc">
+                                    <i class="glyphicon glyphicon-download-alt"></i>
+                                    <p>Choose an image file or drag it here.</p>
+                                </div>
+                                <input type="file" name="img_logo" class="dropzone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary pull-right">Upload</button>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
+        </form>
     </div>
+
 </div>
