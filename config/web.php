@@ -1,7 +1,7 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-//$db = require __DIR__ . '/db.php';
+$routing = require __DIR__ . '/routing.php';
 
 $config = [
     'id' => 'basic',
@@ -41,15 +41,12 @@ $config = [
                 ],
             ],
         ],
-//        'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+            'rules' => $routing
+        ]
     ],
     'params' => $params,
 ];
