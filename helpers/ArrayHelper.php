@@ -23,4 +23,15 @@ class ArrayHelper
 
         return $data;
     }
+
+    /**
+     * @param $array
+     * @param $value
+     * @return int|string|null
+     */
+    public static function getValueId($array, $value)
+    {
+        $values = array_keys($array, $value);
+        return array_shift($values);
+    }
 }

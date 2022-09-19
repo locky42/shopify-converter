@@ -2,5 +2,5 @@
 
 return [
     '' => 'site/index',
-    'POST converter' => 'converter/index',
+    'converter' => 'converter/index',
 ];

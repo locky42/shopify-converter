@@ -2,6 +2,7 @@
 
 namespace app\services;
 
+use app\helpers\ArrayHelper;
 use Yii;
 use Exception;
 use app\helpers\File;
@@ -15,22 +16,35 @@ use app\models\Option;
 
 class EcoLightConverter
 {
-    const ID_PRICE = 10;
-    const ID_IMG = 12;
-    const ID_SKU = 0;
-    const ID_WEIGHT = 3;
-    const ID_TITLE = 0;
-    const ID_COLLECTION = 2;
+    const KEY_PRICE = 'Total Price CAD';
+    const KEY_IMG = 'Image Link';
+    const KEY_VIDEO = 'Video Link';
+    const KEY_SKU = 'Stock #';
+    const KEY_WEIGHT = 'Weight';
+    const KEY_TITLE = 'Stock #';
+    const KEY_COLLECTION = 'Shape';
 
-    const ID_OPTION_1 = 4;
-    const ID_OPTION_2 = 5;
-    const ID_OPTION_3 = 19;
+    const KEY_OPTION_1 = 'Clarity';
+    const KEY_OPTION_2 = 'Color';
+    const KEY_OPTION_3 = 'Cut Grade';
 
     const VENDOR = 'EcoLight';
     const PRODUCT_TYPE = 'EcoLight';
 
     protected array $fileData = [];
     protected array $fileKeys = [];
+
+    protected ?int $idPrice;
+    protected ?int $idImg;
+    protected ?int $idVideo;
+    protected ?int $idSku;
+    protected ?int $idWeight;
+    protected ?int $idTitle;
+    protected ?int $idCollection;
+
+    protected ?int $idOption1;
+    protected ?int $idOption2;
+    protected ?int $idOption3;
 
     protected $csvWriter;
 
@@ -44,6 +58,22 @@ class EcoLightConverter
         $data = $csvReader->read();
         $this->fileKeys = array_shift($data);
         $this->fileData = $data;
+        $this->setKeysIds();
+    }
+
+    protected function setKeysIds()
+    {
+        $this->idPrice = ArrayHelper::getValueId($this->fileKeys, self::KEY_PRICE);
+        $this->idImg = ArrayHelper::getValueId($this->fileKeys, self::KEY_IMG);
+        $this->idVideo = ArrayHelper::getValueId($this->fileKeys, self::KEY_VIDEO);
+        $this->idSku = ArrayHelper::getValueId($this->fileKeys, self::KEY_SKU);
+        $this->idWeight = ArrayHelper::getValueId($this->fileKeys, self::KEY_WEIGHT);
+        $this->idTitle = ArrayHelper::getValueId($this->fileKeys, self::KEY_TITLE);
+        $this->idCollection = ArrayHelper::getValueId($this->fileKeys, self::KEY_COLLECTION);
+
+        $this->idOption1 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_1);
+        $this->idOption2 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_2);
+        $this->idOption3 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_3);
     }
 
     public function convert()
@@ -75,15 +105,16 @@ class EcoLightConverter
             $product = new ShopifyProduct;
 
             $product
-                ->setHandle(Format::handleFormat($importProduct[self::ID_TITLE]))
-                ->setTitle($importProduct[self::ID_TITLE])
-                ->setVariantPrice($importProduct[self::ID_PRICE])
-                ->setImageSrc($importProduct[self::ID_IMG])
-                ->setImageAltText($importProduct[self::ID_TITLE])
-                ->setVariantSku(Format::skuFormat($importProduct[self::ID_SKU]))
-                ->setVariantGrams((float) $importProduct[self::ID_WEIGHT])
+                ->setHandle(Format::handleFormat($importProduct[$this->idTitle]))
+                ->setTitle($importProduct[$this->idTitle])
+                ->setBodyHtml($importProduct[$this->idVideo])
+                ->setVariantPrice($importProduct[$this->idPrice])
+                ->setImageSrc($importProduct[$this->idImg])
+                ->setImageAltText($importProduct[$this->idTitle])
+                ->setVariantSku(Format::skuFormat($importProduct[$this->idSku]))
+                ->setVariantGrams((float) $importProduct[$this->idWeight])
                 ->setVendor(self::VENDOR)
-                ->setCollection($importProduct[self::ID_COLLECTION])
+                ->setCollection($importProduct[$this->idCollection])
                 ->setCustomProductType(self::PRODUCT_TYPE)
                 ->setOptions($this->generateOptions($importProduct));
             $products[] = $product;
@@ -102,20 +133,20 @@ class EcoLightConverter
 
         $option = new Option;
         $option
-            ->setName($this->fileKeys[self::ID_OPTION_1])
-            ->setValue($product[self::ID_OPTION_1]);
+            ->setName($this->fileKeys[$this->idOption1])
+            ->setValue($product[$this->idOption1]);
         $options[] = $option;
 
         $option = new Option;
         $option
-            ->setName($this->fileKeys[self::ID_OPTION_2])
-            ->setValue($product[self::ID_OPTION_2]);
+            ->setName($this->fileKeys[$this->idOption2])
+            ->setValue($product[$this->idOption2]);
         $options[] = $option;
 
         $option = new Option;
         $option
-            ->setName($this->fileKeys[self::ID_OPTION_3])
-            ->setValue($product[self::ID_OPTION_3]);
+            ->setName($this->fileKeys[$this->idOption3])
+            ->setValue($product[$this->idOption3]);
         $options[] = $option;
 
         return $options;
