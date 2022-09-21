@@ -21,4 +21,13 @@ class Format
     {
         return strtolower(self::skuFormat($handle));
     }
+
+    /**
+     * @param $string
+     * @return float
+     */
+    public static function toFloat($string): float
+    {
+        return floatval(preg_replace("/[^-0-9\.]/",'',$string));
+    }
 }

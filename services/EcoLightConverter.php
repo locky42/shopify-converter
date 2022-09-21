@@ -19,6 +19,7 @@ class EcoLightConverter
     const KEY_PRICE = 'Total Price CAD';
     const KEY_IMG = 'Image Link';
     const KEY_VIDEO = 'Video Link';
+    const KEY_CERTIFICATE = 'Certificate Url';
     const KEY_SKU = 'Stock #';
     const KEY_WEIGHT = 'Weight';
     const KEY_TITLE = 'Stock #';
@@ -37,6 +38,7 @@ class EcoLightConverter
     protected ?int $idPrice;
     protected ?int $idImg;
     protected ?int $idVideo;
+    protected ?int $idCertificate;
     protected ?int $idSku;
     protected ?int $idWeight;
     protected ?int $idTitle;
@@ -66,6 +68,7 @@ class EcoLightConverter
         $this->idPrice = ArrayHelper::getValueId($this->fileKeys, self::KEY_PRICE);
         $this->idImg = ArrayHelper::getValueId($this->fileKeys, self::KEY_IMG);
         $this->idVideo = ArrayHelper::getValueId($this->fileKeys, self::KEY_VIDEO);
+        $this->idCertificate = ArrayHelper::getValueId($this->fileKeys, self::KEY_CERTIFICATE);
         $this->idSku = ArrayHelper::getValueId($this->fileKeys, self::KEY_SKU);
         $this->idWeight = ArrayHelper::getValueId($this->fileKeys, self::KEY_WEIGHT);
         $this->idTitle = ArrayHelper::getValueId($this->fileKeys, self::KEY_TITLE);
@@ -107,7 +110,10 @@ class EcoLightConverter
             $product
                 ->setHandle(Format::handleFormat($importProduct[$this->idTitle]))
                 ->setTitle($importProduct[$this->idTitle])
-                ->setBodyHtml($importProduct[$this->idVideo])
+                ->setArrayJsonHtml([
+                    'product_3d_video' => $importProduct[$this->idVideo],
+                    'product_certificate' => $importProduct[$this->idCertificate]
+                ])
                 ->setVariantPrice($importProduct[$this->idPrice])
                 ->setImageSrc($importProduct[$this->idImg])
                 ->setImageAltText($importProduct[$this->idTitle])

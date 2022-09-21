@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\Format;
 use yii\base\Model;
 use app\helpers\ArrayHelper;
 
@@ -67,6 +68,15 @@ class ShopifyProduct extends Model
     public function setBodyHtml($bodyHtml): self
     {
         $this->bodyHtml = $bodyHtml;
+        return $this;
+    }
+
+    public function setArrayJsonHtml(array $data): self
+    {
+        $html = '<script>';
+        $html .= 'product_data = ' . json_encode($data) . ';';
+        $html .= '</script>';
+        $this->setBodyHtml($html);
         return $this;
     }
 
@@ -150,7 +160,7 @@ class ShopifyProduct extends Model
 
     public function setVariantPrice($variantPrice): self
     {
-        $this->variantPrice = number_format($variantPrice, 2, '.', '');
+        $this->variantPrice = number_format(Format::toFloat($variantPrice), 2, '.', '');
         return $this;
     }
 
