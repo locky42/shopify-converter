@@ -24,6 +24,9 @@ class EcoLightConverter
     const KEY_WEIGHT = 'Weight';
     const KEY_TITLE = 'Stock #';
     const KEY_COLLECTION = 'Shape';
+    const KEY_DESCRIPTION = ' Diamond Details';
+    const KEY_SEO_TITLE = ' Seo title';
+    const KEY_SEO_DESCRIPTION = ' Seo description';
 
     const KEY_OPTION_1 = 'Clarity';
     const KEY_OPTION_2 = 'Color';
@@ -43,6 +46,9 @@ class EcoLightConverter
     protected ?int $idWeight;
     protected ?int $idTitle;
     protected ?int $idCollection;
+    protected ?int $idDescription;
+    protected ?int $idSeoTitle;
+    protected ?int $idSeoDescription;
 
     protected ?int $idOption1;
     protected ?int $idOption2;
@@ -73,6 +79,9 @@ class EcoLightConverter
         $this->idWeight = ArrayHelper::getValueId($this->fileKeys, self::KEY_WEIGHT);
         $this->idTitle = ArrayHelper::getValueId($this->fileKeys, self::KEY_TITLE);
         $this->idCollection = ArrayHelper::getValueId($this->fileKeys, self::KEY_COLLECTION);
+        $this->idDescription = ArrayHelper::getValueId($this->fileKeys, self::KEY_DESCRIPTION);
+        $this->idSeoTitle = ArrayHelper::getValueId($this->fileKeys, self::KEY_SEO_TITLE);
+        $this->idSeoDescription = ArrayHelper::getValueId($this->fileKeys, self::KEY_SEO_DESCRIPTION);
 
         $this->idOption1 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_1);
         $this->idOption2 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_2);
@@ -110,10 +119,13 @@ class EcoLightConverter
             $product
                 ->setHandle(Format::handleFormat($importProduct[$this->idTitle]))
                 ->setTitle($importProduct[$this->idTitle])
+                ->setBodyHtml($importProduct[$this->idDescription])
                 ->setArrayJsonHtml([
                     'product_3d_video' => $importProduct[$this->idVideo],
                     'product_certificate' => $importProduct[$this->idCertificate]
                 ])
+                ->setSeoTitle($importProduct[$this->idSeoTitle])
+                ->setSeoDescription($importProduct[$this->idSeoDescription])
                 ->setVariantPrice($importProduct[$this->idPrice])
                 ->setImageSrc($importProduct[$this->idImg])
                 ->setImageAltText($importProduct[$this->idTitle])

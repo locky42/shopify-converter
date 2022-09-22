@@ -22,7 +22,7 @@ class ShopifyProduct extends Model
     public $variantGrams = '0.00';
     public string $variantInventoryTracker = 'shopify';
     public int $variantInventoryQty = 1;
-    public string $variantInventoryPolicy = 'deny';
+    public string $variantInventoryPolicy = 'continue';
     public string $variantFulfillmentService = 'manual';
     public $variantPrice = '0.00';
     public ?string $variantCompareAtPrice = null;
@@ -67,7 +67,11 @@ class ShopifyProduct extends Model
 
     public function setBodyHtml($bodyHtml): self
     {
-        $this->bodyHtml = $bodyHtml;
+        if ($this->bodyHtml) {
+            $this->bodyHtml .= $bodyHtml;
+        } else {
+            $this->bodyHtml = $bodyHtml;
+        }
         return $this;
     }
 
