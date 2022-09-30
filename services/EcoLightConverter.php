@@ -2,35 +2,36 @@
 
 namespace app\services;
 
-use app\helpers\ArrayHelper;
 use Yii;
 use Exception;
 use app\helpers\File;
+use app\helpers\ArrayHelper;
 use app\helpers\CsvReader;
 use app\helpers\CsvWriter;
 use app\helpers\Format;
 use app\helpers\ProductToCsvLineConverter;
 use app\helpers\EcoLightCsvColumns;
+use app\helpers\SeoMeta;
 use app\models\ShopifyProduct;
 use app\models\Option;
 
 class EcoLightConverter
 {
-    const KEY_PRICE = 'Total Price CAD';
-    const KEY_IMG = 'Image Link';
-    const KEY_VIDEO = 'Video Link';
-    const KEY_CERTIFICATE = 'Certificate Url';
-    const KEY_SKU = 'Stock #';
+    const KEY_PRICE = 'Price';
+    const KEY_IMG = 'Image';
+    const KEY_VIDEO = 'Video';
+    const KEY_CERTIFICATE = 'CERT URL';
+    const KEY_SKU = 'StoneNo';
     const KEY_WEIGHT = 'Weight';
-    const KEY_TITLE = 'Stock #';
+    const KEY_TITLE = 'StoneNo';
     const KEY_COLLECTION = 'Shape';
-    const KEY_DESCRIPTION = ' Diamond Details';
-    const KEY_SEO_TITLE = ' Seo title';
-    const KEY_SEO_DESCRIPTION = ' Seo description';
+    const KEY_DESCRIPTION = 'Diamond Details';
+    const KEY_SEO_TITLE = 'Page Title';
+    const KEY_SEO_DESCRIPTION = 'Meta Description';
 
     const KEY_OPTION_1 = 'Clarity';
     const KEY_OPTION_2 = 'Color';
-    const KEY_OPTION_3 = 'Cut Grade';
+    const KEY_OPTION_3 = 'Cut';
 
     const VENDOR = 'EcoLight';
     const PRODUCT_TYPE = 'EcoLight';
@@ -90,7 +91,7 @@ class EcoLightConverter
 
     public function convert()
     {
-        $products = $this->getProducts(1);
+        $products = $this->getProducts();
         $productsToCsv = [];
         foreach ($products as $product) {
             $productsToCsv[] = ProductToCsvLineConverter::toCsvLine($product);
@@ -124,8 +125,8 @@ class EcoLightConverter
                     'product_3d_video' => $importProduct[$this->idVideo],
                     'product_certificate' => $importProduct[$this->idCertificate]
                 ])
-                ->setSeoTitle($importProduct[$this->idSeoTitle])
-                ->setSeoDescription($importProduct[$this->idSeoDescription])
+                ->setSeoTitle(SeoMeta::generateTitle($this->fileKeys, $importProduct, $this->idSeoTitle))
+                ->setSeoDescription(SeoMeta::generateDescription($this->fileKeys, $importProduct, $this->idSeoDescription))
                 ->setVariantPrice($importProduct[$this->idPrice])
                 ->setImageSrc($importProduct[$this->idImg])
                 ->setImageAltText($importProduct[$this->idTitle])
