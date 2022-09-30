@@ -16,6 +16,14 @@ $this->title = 'Shopify CSV converter'; ?>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label">Upload File</label>
+                            <div class="preview-zone hidden">
+                                <div class="box box-solid">
+                                    <div class="box-header with-border">
+                                        <div><b>Preview</b></div>
+                                    </div>
+                                    <div class="box-body"></div>
+                                </div>
+                            </div>
                             <div class="dropzone-wrapper" style="margin-top: 1em;">
                                 <div class="dropzone-desc">
                                     <i class="glyphicon glyphicon-download-alt"></i>
