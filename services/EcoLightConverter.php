@@ -131,7 +131,7 @@ class EcoLightConverter
                 ->setImageSrc($importProduct[$this->idImg])
                 ->setImageAltText($importProduct[$this->idTitle])
                 ->setVariantSku(Format::skuFormat($importProduct[$this->idSku]))
-                ->setVariantGrams((float) $importProduct[$this->idWeight])
+                ->setVariantGrams((float) $importProduct[$this->idWeight] * 100)
                 ->setVendor(self::VENDOR)
                 ->setCollection($importProduct[$this->idCollection])
                 ->setCustomProductType(self::PRODUCT_TYPE)
