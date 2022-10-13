@@ -28,11 +28,11 @@ class UploadForm extends Model
      */
     public function upload(): bool
     {
-        if ($this->validate()) {
+//        if ($this->validate()) {
             $this->file->saveAs(File::getFilePath($this->file->baseName . '.' . $this->file->extension));
             return true;
-        } else {
-            return false;
-        }
+//        } else {
+//            return false;
+//        }
     }
 }
