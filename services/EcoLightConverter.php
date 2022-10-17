@@ -29,6 +29,7 @@ class EcoLightConverter
     const KEY_SEO_TITLE = 'Page Title';
     const KEY_SEO_DESCRIPTION = 'Meta Description';
     const KEY_PUBLISHED = 'Published';
+    const KEY_LAB = 'Lab';
 
     const KEY_OPTION_1 = 'Clarity';
     const KEY_OPTION_2 = 'Color';
@@ -52,6 +53,7 @@ class EcoLightConverter
     protected ?int $idSeoTitle;
     protected ?int $idSeoDescription;
     protected ?int $idPublished;
+    protected ?int $idLab;
 
     protected ?int $idOption1;
     protected ?int $idOption2;
@@ -86,6 +88,7 @@ class EcoLightConverter
         $this->idSeoTitle = ArrayHelper::getValueId($this->fileKeys, self::KEY_SEO_TITLE);
         $this->idSeoDescription = ArrayHelper::getValueId($this->fileKeys, self::KEY_SEO_DESCRIPTION);
         $this->idPublished = ArrayHelper::getValueId($this->fileKeys, self::KEY_PUBLISHED);
+        $this->idLab = ArrayHelper::getValueId($this->fileKeys, self::KEY_LAB);
 
         $this->idOption1 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_1);
         $this->idOption2 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_2);
@@ -124,7 +127,7 @@ class EcoLightConverter
                 ->setHandle(Format::handleFormat($importProduct[$this->idTitle]))
                 ->setTitle($importProduct[$this->idTitle])
                 ->setBodyHtml($importProduct[$this->idDescription])
-                ->setPublished(Format::toBool($importProduct[$this->idPublished], ShopifyProduct::DEFAULT_PUBLISHED))
+                ->setStatus(Format::toBool($importProduct[$this->idPublished], ShopifyProduct::DEFAULT_PUBLISHED))
                 ->setArrayJsonHtml([
                     'product_3d_video' => $importProduct[$this->idVideo],
                     'product_certificate' => $importProduct[$this->idCertificate]
@@ -133,7 +136,7 @@ class EcoLightConverter
                 ->setSeoDescription(SeoMeta::generateDescription($this->fileKeys, $importProduct, $this->idSeoDescription))
                 ->setVariantPrice($importProduct[$this->idPrice])
                 ->setImageSrc($importProduct[$this->idImg])
-                ->setImageAltText($importProduct[$this->idTitle])
+                ->setImageAltText($importProduct[$this->idLab])
                 ->setVariantSku(Format::skuFormat($importProduct[$this->idSku]))
                 ->setVariantGrams((float) $importProduct[$this->idWeight] * 100)
                 ->setVendor(self::VENDOR)

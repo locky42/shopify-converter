@@ -8,6 +8,8 @@ use yii\base\Model;
 class ShopifyProduct extends Model
 {
     const DEFAULT_PUBLISHED = true;
+    const STATUS_ACTIVE = 'active';
+    const STATUS_DRAFT = 'draft';
 
     public ?string $handle = null;
     public ?string $title = null;
@@ -51,7 +53,7 @@ class ShopifyProduct extends Model
     public string $variantWeightUnit = 'g';
     public $variantTaxCode = null;
     public ?float $costPerItem = null;
-    public string $status = 'active';
+    public string $status = self::STATUS_ACTIVE;
     public ?string $collection = null;
 
     public function setHandle($handle): self
@@ -237,7 +239,12 @@ class ShopifyProduct extends Model
 
     public function setStatus($status): self
     {
-        $this->status = $status;
+        if (is_bool($status)) {
+            $this->status = $status ? self::STATUS_ACTIVE : self::STATUS_DRAFT;
+        } else {
+            $this->status = $status;
+        }
+
         return $this;
     }
 
