@@ -4,10 +4,11 @@ namespace app\models;
 
 use app\helpers\Format;
 use yii\base\Model;
-use app\helpers\ArrayHelper;
 
 class ShopifyProduct extends Model
 {
+    const DEFAULT_PUBLISHED = true;
+
     public ?string $handle = null;
     public ?string $title = null;
     public ?string $bodyHtml = null;
@@ -15,7 +16,7 @@ class ShopifyProduct extends Model
     public ?string $standardizedProductType = null;
     public ?string $customProductType = null;
     public array $tags = [];
-    public bool $published = true;
+    public bool $published = self::DEFAULT_PUBLISHED;
     /** @var array */
     public array $options = [];
     public string $variantSku = '';

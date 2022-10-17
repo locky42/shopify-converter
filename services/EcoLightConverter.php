@@ -28,6 +28,7 @@ class EcoLightConverter
     const KEY_DESCRIPTION = 'Diamond Details';
     const KEY_SEO_TITLE = 'Page Title';
     const KEY_SEO_DESCRIPTION = 'Meta Description';
+    const KEY_PUBLISHED = 'Published';
 
     const KEY_OPTION_1 = 'Clarity';
     const KEY_OPTION_2 = 'Color';
@@ -50,6 +51,7 @@ class EcoLightConverter
     protected ?int $idDescription;
     protected ?int $idSeoTitle;
     protected ?int $idSeoDescription;
+    protected ?int $idPublished;
 
     protected ?int $idOption1;
     protected ?int $idOption2;
@@ -83,6 +85,7 @@ class EcoLightConverter
         $this->idDescription = ArrayHelper::getValueId($this->fileKeys, self::KEY_DESCRIPTION);
         $this->idSeoTitle = ArrayHelper::getValueId($this->fileKeys, self::KEY_SEO_TITLE);
         $this->idSeoDescription = ArrayHelper::getValueId($this->fileKeys, self::KEY_SEO_DESCRIPTION);
+        $this->idPublished = ArrayHelper::getValueId($this->fileKeys, self::KEY_PUBLISHED);
 
         $this->idOption1 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_1);
         $this->idOption2 = ArrayHelper::getValueId($this->fileKeys, self::KEY_OPTION_2);
@@ -121,6 +124,7 @@ class EcoLightConverter
                 ->setHandle(Format::handleFormat($importProduct[$this->idTitle]))
                 ->setTitle($importProduct[$this->idTitle])
                 ->setBodyHtml($importProduct[$this->idDescription])
+                ->setPublished(Format::toBool($importProduct[$this->idPublished], ShopifyProduct::DEFAULT_PUBLISHED))
                 ->setArrayJsonHtml([
                     'product_3d_video' => $importProduct[$this->idVideo],
                     'product_certificate' => $importProduct[$this->idCertificate]

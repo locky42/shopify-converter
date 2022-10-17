@@ -30,4 +30,17 @@ class Format
     {
         return floatval(preg_replace("/[^-0-9\.]/",'',$string));
     }
+
+    /**
+     * @param $data
+     * @param bool $default
+     * @return bool
+     */
+    public static function toBool($data, bool $default = false): bool
+    {
+        return match (gettype($data)) {
+            'string' => $data == '' ? $default : filter_var($data, FILTER_VALIDATE_BOOLEAN),
+            default   => is_null($data) ? $default : filter_var($data, FILTER_VALIDATE_BOOLEAN)
+        };
+    }
 }
