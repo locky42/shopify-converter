@@ -125,7 +125,15 @@ class EcoLightConverter
 
             $product
                 ->setHandle(Format::handleFormat($importProduct[$this->idTitle]))
-                ->setTitle($importProduct[$this->idTitle])
+                ->setTitle(
+                    implode(' / ', array_filter([
+                        trim($importProduct[$this->idTitle]),
+                        (float) $importProduct[$this->idWeight] * 100,
+                        trim($importProduct[$this->idOption3]),
+                        trim($importProduct[$this->idOption2]),
+                        trim($importProduct[$this->idOption1]),
+                    ], 'strlen'))
+                )
                 ->setBodyHtml($importProduct[$this->idDescription])
                 ->setStatus(Format::toBool($importProduct[$this->idPublished], ShopifyProduct::DEFAULT_PUBLISHED))
                 ->setArrayJsonHtml([
