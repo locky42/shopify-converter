@@ -70,6 +70,14 @@ class EcoLightConverter
         $this->csvWriter = new CsvWriter(File::FILES_DIR, EcoLightCsvColumns::COLUMNS);
         $data = $csvReader->read();
         $this->fileKeys = array_shift($data);
+        foreach ($data as $number => $row) {
+            $emptyCel = 0;
+            foreach ($row as $item) {
+                if (!$item) $emptyCel++;
+            }
+
+            if ($emptyCel == count($row)) unset($data[$number]);
+        }
         $this->fileData = $data;
         $this->setKeysIds();
     }
@@ -128,7 +136,7 @@ class EcoLightConverter
                 ->setTitle(
                     implode(' / ', array_filter([
                         trim($importProduct[$this->idTitle]),
-                        number_format($importProduct[$this->idWeight], 2),
+                        number_format((int)$importProduct[$this->idWeight], 2),
                         trim($importProduct[$this->idOption3]),
                         trim($importProduct[$this->idOption2]),
                         trim($importProduct[$this->idOption1]),
