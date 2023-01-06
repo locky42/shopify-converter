@@ -136,7 +136,7 @@ class EcoLightConverter
                 ->setTitle(
                     implode(' / ', array_filter([
                         trim($importProduct[$this->idTitle]),
-                        number_format((int)$importProduct[$this->idWeight], 2),
+                        number_format((float) $importProduct[$this->idWeight], 2),
                         trim($importProduct[$this->idOption3]),
                         trim($importProduct[$this->idOption2]),
                         trim($importProduct[$this->idOption1]),
